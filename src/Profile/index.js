@@ -15,6 +15,15 @@ const Profile = () => {
     email: "abc@gmail.com",
     classes: ["CS 101", "CS 102", "CS 103"],
     interests: ["Music", "Movies", "Sports"],
+	date_pref: ["Monday", "Tuesday", "Sunday"],
+	time_pref: ["Afternoon", "Evening"],
+	location_pref: ["Butler Library", "Butler Cafe"],
+	major_pref: "Same",
+	program_pref: "Same",
+	year_pref: "Same",
+	classes_pref: "Same",
+	interests_pref: "Same"
+
   };
   return (
     <Layout>
@@ -96,23 +105,95 @@ const Profile = () => {
 			</Row>
 			<Row>
 				<Col span={8}>
-					<p>{user.classes}</p>
+					<p>{user.classes.join(', ')}</p>
+				</Col>
+				<Col span={8}/>
+				<Col span={8}/>
+			</Row>
+			<Row>
+				<Col span={8}>
+					<b>Interests</b>
+				</Col>
+				<Col span={8}/>
+				<Col span={8}/>
+			</Row>
+			<Row>
+				<Col span={8}>
+					<p>{user.interests.join(', ')}</p>
 				</Col>
 				<Col span={8}/>
 				<Col span={8}/>
 			</Row>
           </Card>
-          <Card
-            size="small"
-            title="Small size card"
-            extra={<a href="#">More</a>}
+		  <Card
+            title="Preferences"
+            extra={<a href="">Edit</a>}
             style={{
-              width: 300,
+              width: "90%",
             }}
           >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
+			<Row>
+              <Col span={8}>
+                <b>Date</b>
+              </Col>
+              <Col span={8}>
+                <b>Time</b>
+              </Col>
+              <Col span={8}>
+                <b>Location</b>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <p>{user.date_pref.join(', ')}</p>
+              </Col>
+              <Col span={8}>
+                <p>{user.time_pref.join(', ')}</p>
+              </Col>
+              <Col span={8}>
+                <p>{user.location_pref.join(', ')}</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <b>Major</b>
+              </Col>
+              <Col span={8}>
+                <b>Program</b>
+              </Col>
+              <Col span={8}>
+                <b>Year</b>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <p>{user.major_pref}</p>
+              </Col>
+              <Col span={8}>
+                <p>{user.program_pref}</p>
+              </Col>
+              <Col span={8}>
+                <p>{user.year_pref}</p>
+              </Col>
+            </Row>
+			<Row>
+              <Col span={8}>
+                <b>Classes</b>
+              </Col>
+              <Col span={8}>
+                <b>Interests</b>
+              </Col>
+			  <Col span={8}/>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <p>{user.classes_pref}</p>
+              </Col>
+              <Col span={8}>
+                <p>{user.interests_pref}</p>
+              </Col>
+			  <Col span={8}/>
+            </Row>
           </Card>
       </Content>
     </Layout>

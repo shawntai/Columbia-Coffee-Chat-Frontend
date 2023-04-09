@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Profile from "./Profile";
 import Home from "./Home";
 import History from "./History";
+import EditProfile from "./EditProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
 	{
 		path: "/history",
 		element: <History />,
+	},
+	{
+		path: "/edit",
+		element: <EditProfile />,
 	},
 ]);
 

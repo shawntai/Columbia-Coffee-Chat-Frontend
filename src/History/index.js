@@ -1,9 +1,26 @@
 import { Col, Row, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import HistoryCard from "./HistoryCard";
+import ChatCard from "./ChatCard";
 
 const History = () => {
 	const navigate = useNavigate();
+	const chatHistory = [
+		{
+			name: "Shawn Tai",
+			time: new Date(),
+			location: "Butler Library",
+		},
+		{
+			name: "Luke Hsu",
+			time: new Date(),
+			location: "Ferris Booth Commons",
+		},
+		{
+			name: "Curt Cobain",
+			time: new Date(),
+			location: "Myanmar",
+		},
+	];
 	return (
 		<div>
 			<Row style={{ background: "#7dbcea", padding: 20 }}>
@@ -35,9 +52,9 @@ const History = () => {
 				<Col span={4} />
 			</Row>
 			<Space direction="vertical">
-				<HistoryCard />
-				<HistoryCard />
-				<HistoryCard />
+				{chatHistory.map((chat) => (
+					<ChatCard chat={chat} />
+				))}
 			</Space>
 		</div>
 	);

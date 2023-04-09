@@ -1,7 +1,18 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Layout, Row, Space, Typography } from "antd";
+import { CalendarOutlined, UserOutlined } from "@ant-design/icons";
+import { PlaceOutlined } from "@mui/icons-material";
+import {
+	Avatar,
+	Button,
+	Card,
+	Col,
+	Layout,
+	Row,
+	Space,
+	Typography,
+} from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
-import { redirect, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const headerStyle = {
 	textAlign: "center",
@@ -29,7 +40,11 @@ const footerStyle = {
 
 const Home = () => {
 	const navigate = useNavigate();
-
+	const [match, setMatch] = useState({
+		name: "Luke Hsu",
+		time: new Date(),
+		location: "Butler Library",
+	});
 	return (
 		<div className="App">
 			<Layout>
@@ -40,7 +55,7 @@ const Home = () => {
 								level={3}
 								style={{ color: "#fff" }}
 							>
-								C-Cube: Columbia Coffee Chat{" "}
+								C-Cube: Columbia Coffee Chat
 							</Typography.Title>
 						</Col>
 						<Col span={4}>
@@ -57,7 +72,65 @@ const Home = () => {
 					</Row>
 				</Header>
 				<Content style={contentStyle}>
-					<img src="https://www.columbia.edu/content/sites/default/files/styles/cu_crop/public/content/Morningside%20Campus%20at%20Dusk%202.jpg?itok=SkwvzD5S" />
+					<Row>
+						<img
+							src="https://www.columbia.edu/content/sites/default/files/styles/cu_crop/public/content/Morningside%20Campus%20at%20Dusk%202.jpg?itok=SkwvzD5S"
+							width="100%"
+						/>
+					</Row>
+					<Row>
+						<Typography.Text
+							style={{
+								color: "white",
+								margin: 20,
+								fontSize: "20pt",
+							}}
+						>
+							Your Match of the Week
+						</Typography.Text>
+					</Row>
+					<Row>
+						<Card style={{ width: "100%", margin: 20 }}>
+							<Row>
+								<Col span={4}>
+									<Avatar size={64} icon={<UserOutlined />} />
+								</Col>
+								<Col span={10}>
+									<Typography.Text
+										style={{ fontSize: "30px" }}
+									>
+										{match.name}
+									</Typography.Text>
+								</Col>
+								<Col span={10}>
+									<Row>
+										<Space>
+											<CalendarOutlined
+												style={{ fontSize: 35 }}
+											/>
+											<Typography.Text
+												style={{ fontSize: "20px" }}
+											>
+												{match.time.toLocaleString()}
+											</Typography.Text>
+										</Space>
+									</Row>
+									<Row>
+										<Space>
+											<PlaceOutlined
+												style={{ fontSize: 35 }}
+											/>
+											<Typography.Text
+												style={{ fontSize: "20px" }}
+											>
+												{match.location}
+											</Typography.Text>
+										</Space>
+									</Row>
+								</Col>
+							</Row>
+						</Card>
+					</Row>
 				</Content>
 				{/* <Footer style={footerStyle}>Footer</Footer> */}
 			</Layout>

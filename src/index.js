@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import Home from "./Home";
 import History from "./History";
 import EditProfile from "./EditProfile";
+import Review from "./Review";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
 	{
 		path: "/edit",
 		element: <EditProfile />,
+	},
+	{
+		path: "/review/:id",
+		element: <Review />,
 	},
 ]);
 

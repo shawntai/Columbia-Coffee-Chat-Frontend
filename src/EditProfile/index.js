@@ -7,7 +7,7 @@ import {
   Layout,
   Button,
   Typography,
-  Input
+  Input,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Content, Footer, Header } from "antd/es/layout/layout";
@@ -113,13 +113,13 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-		  	<Input placeholder={user.major}/>
+            <Input defaultValue={user.major} />
           </Col>
           <Col span={8}>
-		  	<Input placeholder={user.program} />
+            <Input defaultValue={user.program} />
           </Col>
           <Col span={8}>
-			<Input placeholder={user.year} />
+            <Input defaultValue={user.year} />
           </Col>
         </Row>
         <Row>
@@ -133,10 +133,23 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <p>{user.phone}</p>
+            <Space.Compact>
+              <Input
+                style={{
+                  width: "20%",
+                }}
+                defaultValue="+1"
+              />
+              <Input
+                style={{
+                  width: "80%",
+                }}
+                defaultValue={user.phone}
+              />
+            </Space.Compact>
           </Col>
           <Col span={8}>
-            <p>{user.email}</p>
+			<Input defaultValue={user.email} />
           </Col>
           <Col span={8} />
         </Row>
@@ -149,7 +162,7 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <p>{user.classes.join(", ")}</p>
+			<Input defaultValue={user.classes.join(", ")} />
           </Col>
           <Col span={8} />
           <Col span={8} />
@@ -163,7 +176,7 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <p>{user.interests.join(", ")}</p>
+			<Input defaultValue={user.interests.join(", ")} />
           </Col>
           <Col span={8} />
           <Col span={8} />

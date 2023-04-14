@@ -33,7 +33,11 @@ const Profile = () => {
     interests_pref: "Same",
   };
   return (
-    <Layout>
+    <Layout
+      style={{
+        // background: "#012269"
+      }}
+    >
       <Row style={{ background: "#7dbcea", padding: 20 }}>
         <Col span={4}>
           <Typography.Text
@@ -78,11 +82,13 @@ const Profile = () => {
       <Card
         title="Profile"
         extra={<a href="#">Edit</a>}
+			  headStyle={{ background: "#7dbcea" }}
         style={{
           alignContent: "center",
           margin: "auto",
           marginTop: "20px",
           width: "90%",
+          boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         }}
       >
         <Row>
@@ -163,11 +169,13 @@ const Profile = () => {
       <Card
         title="Preferences"
         extra={<a href="">Edit</a>}
+        headStyle={{ background: "#7dbcea" }}
         style={{
           margin: "auto",
           marginTop: "20px",
           marginBottom: "20px",
           width: "90%",
+          boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         }}
       >
         <Row>

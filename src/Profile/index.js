@@ -81,7 +81,7 @@ const Profile = () => {
 
       <Card
         title="Profile"
-        extra={<a href="#">Edit</a>}
+        extra={<a href="/edit">Edit</a>}
 			  headStyle={{ background: "#7dbcea" }}
         style={{
           alignContent: "center",
@@ -168,7 +168,7 @@ const Profile = () => {
       </Card>
       <Card
         title="Preferences"
-        extra={<a href="">Edit</a>}
+        extra={<a href="/edit">Edit</a>}
         headStyle={{ background: "#7dbcea" }}
         style={{
           margin: "auto",

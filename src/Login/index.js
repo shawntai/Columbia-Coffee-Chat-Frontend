@@ -27,8 +27,8 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            username_or_email: values.username,
-            password: values.password,
+          username_or_email: values.username,
+          password: values.password,
         }),
       }
     )
@@ -146,10 +146,11 @@ const Login = () => {
               }}
             >
               <Button type="primary" htmlType="submit">
-                Submit
+                Login
               </Button>
             </Form.Item>
           </Form>
+          <Button onClick={() => navigate("/register")}>Register</Button>
         </Card>
       </Row>
     </>

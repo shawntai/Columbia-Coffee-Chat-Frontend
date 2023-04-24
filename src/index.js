@@ -7,6 +7,7 @@ import History from "./History";
 import EditProfile from "./EditProfile";
 import Review from "./Review";
 import Login from "./Login";
+import Register from "./Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
 	{
 		path: "/login",
 		element: <Login />,
+	},
+	{
+		path: "/register",
+		element: <Register />,
 	},
 	{
 		path: "/home",

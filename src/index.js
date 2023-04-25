@@ -8,6 +8,7 @@ import EditProfile from "./EditProfile";
 import Review from "./Review";
 import Login from "./Login";
 import Register from "./Register";
+import Confirm from "./Confirm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
 	{
 		path: "/register",
 		element: <Register />,
+	},
+	{
+		path: "/confirm",
+		element: <Confirm />,
 	},
 	{
 		path: "/home",

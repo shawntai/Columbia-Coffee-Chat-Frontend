@@ -15,7 +15,8 @@ import { redirect, useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const user = {
-    name: "John Doe",
+    fname: "John",
+    lname: "Doe",
     major: "Computer Science",
     program: "Bachelors",
     school_year: 3,
@@ -94,7 +95,7 @@ const Profile = () => {
         <Row>
           <Space>
             <Avatar size={24} icon={<UserOutlined />} />
-            <h2>Name: {user.name}</h2>
+            <h2>Name: {user.fname + " " + user.lname}</h2>
           </Space>
         </Row>
         <Row>

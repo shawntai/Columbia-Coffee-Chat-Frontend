@@ -20,10 +20,11 @@ const EditProfile = () => {
   const [userId, setUserId] = useState("");
   const navigate = useNavigate();
   const user = {
-    name: "John Doe",
+    fname: "John",
+    lname: "Doe",
     major: "Computer Science",
     program: "Bachelors",
-    year: 3,
+    school_year: 3,
     phone: "555-555-5555",
     email: "abc@gmail.com",
     classes: ["CS 101", "CS 102", "CS 103"],
@@ -49,7 +50,10 @@ const EditProfile = () => {
   const handleChange = () => {
     return 0;
   };
-  useEffect(() => {
+  const get_temp_UserID = () => {
+    return "09155cb4-a9e8-4824-947a-41227da56d62";
+  };
+  const getUserId = () => {
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
       {
@@ -69,7 +73,62 @@ const EditProfile = () => {
         setUserId(userId);
         localStorage.setItem("userId", userId);
       });
+    return userId;
+  };
+  //initial call
+  useEffect(() => {
+    console.log("useEffect called");
+    setUserId(get_temp_UserID());
+    console.log("userId: " + userId);
   });
+  const submitProfile = () => {
+    // TODO: save profile
+    console.log("submitting profile");
+    const updatedProfile = {
+      active_or_not: false,
+      fname: "Joey",
+      lname: "Doe",
+      major: "Computer Science",
+      program: "Bachelors",
+      school_year: 3,
+      phone: "555-555-5555",
+      email: "abc@gmail.com",
+      classes: ["CS 101", "CS 102", "CS 103"],
+      interests: ["Music", "Movies", "Sports"],
+      date_pref: ["Monday", "Tuesday", "Sunday"],
+      time_pref: ["Afternoon", "Evening"],
+      location_pref: ["Butler Library", "Butler Cafe"],
+      major_pref: "Same",
+      program_pref: "Same",
+      year_pref: "Same",
+      classes_pref: "Same",
+      interests_pref: "Same",
+    };
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/edit",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: {
+            profile: {
+              userId,
+              ...updatedProfile,
+            },
+          },
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log({ newProfile: data });
+        // const userId = data["userId"];
+        // setUserId(userId);
+        // localStorage.setItem("userId", userId);
+      });
+  };
   return (
     <Layout
       style={
@@ -121,58 +180,7 @@ const EditProfile = () => {
 
       <Card
         title="Profile"
-        extra={
-          <Button
-            onClick={() => {
-              // TODO: save profile
-              const updatedProfile = {
-                // userId: "09155cb4-a9e8-4824-947a-41227da56d62",
-                active_or_not: false,
-                fname: "Joey",
-                lname: "Doe",
-                major: "Computer Science",
-                program: "Bachelors",
-                school_year: 3,
-                phone: "555-555-5555",
-                email: "abc@gmail.com",
-                classes: ["CS 101", "CS 102", "CS 103"],
-                interests: ["Music", "Movies", "Sports"],
-                date_pref: ["Monday", "Tuesday", "Sunday"],
-                time_pref: ["Afternoon", "Evening"],
-                location_pref: ["Butler Library", "Butler Cafe"],
-                major_pref: "Same",
-                program_pref: "Same",
-                year_pref: "Same",
-                classes_pref: "Same",
-                interests_pref: "Same",
-              };
-              fetch(
-                "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: {
-                    profile: {
-                      userId,
-                      ...updatedProfile,
-                    },
-                  },
-                }
-              )
-                .then((response) => response.json())
-                .then((data) => {
-                  console.log({ newProfile: data });
-                  // const userId = data["userId"];
-                  // setUserId(userId);
-                  // localStorage.setItem("userId", userId);
-                });
-            }}
-          >
-            Save
-          </Button>
-        }
+        extra={<Button onClick={submitProfile}>Save</Button>}
         headStyle={{ background: "#7dbcea" }}
         style={{
           alignContent: "center",
@@ -185,7 +193,7 @@ const EditProfile = () => {
         <Row>
           <Space>
             <Avatar size={24} icon={<UserOutlined />} />
-            <h2>Name: {user.name}</h2>
+            <h2>Name: {user.fname + " " + user.lname}</h2>
           </Space>
         </Row>
         <Row>
@@ -272,7 +280,7 @@ const EditProfile = () => {
       </Card>
       <Card
         title="Preferences"
-        extra={<a href="">Save</a>}
+        extra={<Button onClick={submitProfile}>Save</Button>}
         headStyle={{ background: "#7dbcea" }}
         style={{
           margin: "auto",

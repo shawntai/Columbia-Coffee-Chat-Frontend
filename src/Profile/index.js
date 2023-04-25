@@ -18,7 +18,7 @@ const Profile = () => {
     name: "John Doe",
     major: "Computer Science",
     program: "Bachelors",
-    year: 3,
+    school_year: 3,
     phone: "555-555-5555",
     email: "abc@gmail.com",
     classes: ["CS 101", "CS 102", "CS 103"],

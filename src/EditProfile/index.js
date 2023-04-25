@@ -14,8 +14,10 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { redirect, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const EditProfile = () => {
+  const [userId, setUserId] = useState("");
   const navigate = useNavigate();
   const user = {
     name: "John Doe",
@@ -44,9 +46,30 @@ const EditProfile = () => {
     { label: "Saturday", value: "Saturday" },
     { label: "Sunday", value: "Sunday" },
   ];
-  const handleChange=()=>{
-	return 0;
-  }
+  const handleChange = () => {
+    return 0;
+  };
+  useEffect(() => {
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          auth: localStorage.getItem("authToken"),
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const userId = data["userId"];
+        setUserId(userId);
+        localStorage.setItem("userId", userId);
+      });
+  });
   return (
     <Layout
       style={
@@ -98,7 +121,58 @@ const EditProfile = () => {
 
       <Card
         title="Profile"
-        extra={<a href="#">Save</a>}
+        extra={
+          <Button
+            onClick={() => {
+              // TODO: save profile
+              const updatedProfile = {
+                // userId: "09155cb4-a9e8-4824-947a-41227da56d62",
+                active_or_not: false,
+                fname: "Joey",
+                lname: "Doe",
+                major: "Computer Science",
+                program: "Bachelors",
+                school_year: 3,
+                phone: "555-555-5555",
+                email: "abc@gmail.com",
+                classes: ["CS 101", "CS 102", "CS 103"],
+                interests: ["Music", "Movies", "Sports"],
+                date_pref: ["Monday", "Tuesday", "Sunday"],
+                time_pref: ["Afternoon", "Evening"],
+                location_pref: ["Butler Library", "Butler Cafe"],
+                major_pref: "Same",
+                program_pref: "Same",
+                year_pref: "Same",
+                classes_pref: "Same",
+                interests_pref: "Same",
+              };
+              fetch(
+                "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: {
+                    profile: {
+                      userId,
+                      ...updatedProfile,
+                    },
+                  },
+                }
+              )
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log({ newProfile: data });
+                  // const userId = data["userId"];
+                  // setUserId(userId);
+                  // localStorage.setItem("userId", userId);
+                });
+            }}
+          >
+            Save
+          </Button>
+        }
         headStyle={{ background: "#7dbcea" }}
         style={{
           alignContent: "center",

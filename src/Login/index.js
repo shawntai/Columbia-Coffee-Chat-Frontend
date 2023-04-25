@@ -35,6 +35,8 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("response:", data);
+        localStorage.setItem("token", data.authToken);
+        navigate("/home");
       });
   };
 

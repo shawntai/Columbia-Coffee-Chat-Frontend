@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 const EditProfile = () => {
   const [userId, setUserId] = useState("");
   const navigate = useNavigate();
-  const user = {
+  const [user, setUser] = useState({
     fname: "John",
     lname: "Doe",
     major: "Computer Science",
@@ -32,12 +32,12 @@ const EditProfile = () => {
     date_pref: ["Monday", "Tuesday", "Sunday"],
     time_pref: ["Afternoon", "Evening"],
     location_pref: ["Butler Library", "Butler Cafe"],
-    major_pref: "Same",
+    major_pref: "same",
     program_pref: "Same",
     year_pref: "Same",
     classes_pref: "Same",
     interests_pref: "Same",
-  };
+  });
   const dateOptions = [
     { label: "Monday", value: "Monday" },
     { label: "Tuesday", value: "Tuesday" },
@@ -54,15 +54,13 @@ const EditProfile = () => {
     return "09155cb4-a9e8-4824-947a-41227da56d62";
   };
   const getUserId = () => {
+    console.log("authToken: " + localStorage.getItem("token"));
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          auth: localStorage.getItem("authToken"),
+          Authorization: localStorage.getItem("token")
         },
       }
     )
@@ -73,13 +71,48 @@ const EditProfile = () => {
         setUserId(userId);
         localStorage.setItem("userId", userId);
       });
-    return userId;
   };
+
+  const getPublicProfile = () => {
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/09155cb4-a9e8-4824-947a-41227da56d62",
+      {
+        method: "GET",
+        headers: {
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      }
+    );
+  };
+
+  const getmatches = () => {
+    console.log("get matches");
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/past",
+      {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      }
+    );
+  };
+
   //initial call
   useEffect(() => {
     console.log("useEffect called");
-    setUserId(get_temp_UserID());
-    console.log("userId: " + userId);
+    // getUserId();
+    // console.log("userId: " + userId);
+    getUserId();
   });
   const submitProfile = () => {
     // TODO: save profile
@@ -212,10 +245,10 @@ const EditProfile = () => {
             <Input defaultValue={user.major} />
           </Col>
           <Col span={8}>
-            <Input defaultValue={user.program} />
+            <Input value={user.program} />
           </Col>
           <Col span={8}>
-            <Input defaultValue={user.year} />
+            <Input value={user.school_year} />
           </Col>
         </Row>
         <Row>
@@ -336,6 +369,7 @@ const EditProfile = () => {
             <Select
               style={{ width: 120 }}
               onChange={handleChange}
+              value={user.major_pref}
               options={[
                 { value: "same", label: "same" },
                 { value: "different", label: "different" },
@@ -401,6 +435,12 @@ const EditProfile = () => {
           <Col span={8} />
         </Row>
       </Card>
+      <Button
+      onClick={() => {
+        getPublicProfile();
+      }}>
+        matches
+      </Button>
     </Layout>
   );
 };

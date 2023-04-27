@@ -100,7 +100,7 @@ const EditProfile = () => {
   const handleChange = (event) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
-    if (fieldName == "classes" || fieldName == "interests") {
+    if (fieldName == "classes" || fieldName == "interests" || fieldName=="time_pref" || fieldName=="location_pref") {
       //remove whitespace and split by comma
       const newarr = fieldValue.replace(/\s/g, "").split(",");
       setUser(prevUser => {

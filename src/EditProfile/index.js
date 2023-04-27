@@ -21,6 +21,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     uuid: "",
+    active_or_not: true,
     fname: "",
     lname: "",
     major: "",
@@ -48,12 +49,8 @@ const EditProfile = () => {
     { label: "Saturday", value: "Saturday" },
     { label: "Sunday", value: "Sunday" },
   ];
-  
-  const [userUpdated, setUserUpdated] = useState(false);
-  useEffect(() => {
-    setUserUpdated(true);
-  }, [user]);
 
+  // Get User Information to load into the page
   const getPrivateProfile = () => {
     console.log("Calling private profile...");
     fetch(
@@ -68,15 +65,9 @@ const EditProfile = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("private profile: ", data);
-        // //const userId = data["userId"];
-        // //setUserId(userId);
-        // // turn data to JSON
-        // // data = JSON.parse(data);
-        // // console.log(data['active_or_not']);
-        // console.log(data['classes']);
-        // console.log(data['fname']);
         setUser({
           uuid: data.uuid,
+          active_or_not: data.active_or_not,
           fname: data.fname,
           lname: data.lname,
           major: data.major,
@@ -99,41 +90,11 @@ const EditProfile = () => {
         console.log("user:", user.major)
       });
   };
-
-  const getPublicProfile = () => {
-    console.log("Calling public profile...");
-    fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/09155cb4-a9e8-4824-947a-41227da56d62",
-      {
-        method: "GET",
-        headers: {},
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("public profile: ", data);
-      });
-  };
-
-  const getmatches = () => {
-    console.log("get matches");
-    fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/past",
-      {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
-  const handleSchoolYearChange = (event) => {
-    setUser({ ...user, school_year: event.target.value });
-  };
+  // call getPrivateProfile on page load
+  useEffect(() => {
+    console.log("useEffect called");
+    getPrivateProfile();
+  }, []);
 
   // Handle changes for all fields
   const handleChange = (event) => {
@@ -157,39 +118,11 @@ const EditProfile = () => {
       };
     });
   }
-  
-  
-  
 
-  //initial call
-  useEffect(() => {
-    console.log("useEffect called");
-    getPrivateProfile();
-  }, []);
-
+  // Save changes to backend
   const submitProfile = () => {
     // TODO: save profile
     console.log("submitting profile");
-    const updatedProfile = {
-      active_or_not: false,
-      fname: "Joey",
-      lname: "Doe",
-      major: "Computer Science",
-      program: "Bachelors",
-      school_year: 3,
-      phone: "555-555-5555",
-      email: "abc@gmail.com",
-      classes: ["CS 101", "CS 102", "CS 103"],
-      interests: ["Music", "Movies", "Sports"],
-      date_pref: ["Monday", "Tuesday", "Sunday"],
-      time_pref: ["Afternoon", "Evening"],
-      location_pref: ["Butler Library", "Butler Cafe"],
-      major_pref: "Same",
-      program_pref: "Same",
-      year_pref: "Same",
-      classes_pref: "Same",
-      interests_pref: "Same",
-    };
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/edit",
       {
@@ -200,8 +133,25 @@ const EditProfile = () => {
         body: JSON.stringify({
           body: {
             profile: {
-              userId,
-              ...updatedProfile,
+              userId: user.uuid,
+              active_or_not: user.active_or_not,
+              fname: user.fname,
+              lname: user.lname,
+              major: user.major,
+              program: user.program,
+              school_year: user.school_year,
+              phone: user.phone,
+              email: user.email,
+              classes: user.classes,
+              interests: user.interests,
+              date_pref: user.date_pref,
+              time_pref: user.time_pref,
+              location_pref: user.location_pref,
+              major_pref: user.major_pref,
+              program_pref: user.program_pref,
+              year_pref: user.year_pref,
+              classes_pref: user.classes_pref,
+              interests_pref: user.interests_pref,
             },
           },
         }),
@@ -527,13 +477,6 @@ const EditProfile = () => {
           <Col span={8} />
         </Row>
       </Card>
-      <Button
-        onClick={() => {
-          getPublicProfile();
-        }}
-      >
-        matches
-      </Button>
     </Layout>
   );
 };

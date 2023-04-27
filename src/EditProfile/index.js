@@ -100,14 +100,25 @@ const EditProfile = () => {
   const handleChange = (event) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
-  
-    setUser(prevUser => {
-      return {
-        ...prevUser,
-        [fieldName]: fieldValue
-      };
-    });
-  }
+    if (fieldName == "classes" || fieldName == "interests") {
+      //remove whitespace and split by comma
+      const newarr = fieldValue.replace(/\s/g, "").split(",");
+      setUser(prevUser => {
+        return {
+          ...prevUser,
+          [fieldName]: newarr
+        };
+      });
+    } 
+    else {
+      setUser(prevUser => {
+        return {
+          ...prevUser,
+          [fieldName]: fieldValue
+        };
+      });
+    }
+  };
   // handle changes for select
   function handleChangeSelect(value, option) {
     const fieldName = option.name;

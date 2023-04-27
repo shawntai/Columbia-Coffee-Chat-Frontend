@@ -20,23 +20,24 @@ const EditProfile = () => {
   const [userId, setUserId] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    fname: "John",
-    lname: "Doe",
-    major: "Computer Science",
-    program: "Bachelors",
-    school_year: 3,
-    phone: "555-555-5555",
-    email: "abc@gmail.com",
-    classes: ["CS 101", "CS 102", "CS 103"],
-    interests: ["Music", "Movies", "Sports"],
-    date_pref: ["Monday", "Tuesday", "Sunday"],
-    time_pref: ["Afternoon", "Evening"],
-    location_pref: ["Butler Library", "Butler Cafe"],
-    major_pref: "same",
-    program_pref: "Same",
-    year_pref: "Same",
-    classes_pref: "Same",
-    interests_pref: "Same",
+    uuid: "",
+    fname: "",
+    lname: "",
+    major: "",
+    program: "",
+    school_year: 0,
+    phone: "",
+    email: "",
+    classes: [],
+    interests: [],
+    date_pref: [],
+    time_pref: [],
+    location_pref: [],
+    major_pref: "",
+    program_pref: "",
+    year_pref: "",
+    classes_pref: "",
+    interests_pref: "",
   });
   const dateOptions = [
     { label: "Monday", value: "Monday" },
@@ -47,46 +48,71 @@ const EditProfile = () => {
     { label: "Saturday", value: "Saturday" },
     { label: "Sunday", value: "Sunday" },
   ];
-  const handleChange = () => {
-    return 0;
-  };
-  const get_temp_UserID = () => {
-    return "09155cb4-a9e8-4824-947a-41227da56d62";
-  };
-  const getUserId = () => {
-    console.log("authToken: " + localStorage.getItem("token"));
+  
+  const [userUpdated, setUserUpdated] = useState(false);
+  useEffect(() => {
+    setUserUpdated(true);
+  }, [user]);
+
+  const getPrivateProfile = () => {
+    console.log("Calling private profile...");
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
       {
         method: "GET",
         headers: {
-          Authorization: localStorage.getItem("token")
+          Authorization: localStorage.getItem("token"),
         },
       }
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        const userId = data["userId"];
-        setUserId(userId);
-        localStorage.setItem("userId", userId);
+        console.log("private profile: ", data);
+        // //const userId = data["userId"];
+        // //setUserId(userId);
+        // // turn data to JSON
+        // // data = JSON.parse(data);
+        // // console.log(data['active_or_not']);
+        // console.log(data['classes']);
+        // console.log(data['fname']);
+        setUser({
+          uuid: data.uuid,
+          fname: data.fname,
+          lname: data.lname,
+          major: data.major,
+          program: data.program,
+          school_year: data.school_year,
+          phone: data.phone,
+          email: data.email,
+          classes: data.classes,
+          interests: data.interests,
+          date_pref: data.date_pref,
+          time_pref: data.time_pref,
+          location_pref: data.location_pref,
+          major_pref: data.major_pref,
+          program_pref: data.program_pref,
+          year_pref: data.year_pref,
+          classes_pref: data.classes_pref,
+          interests_pref: data.interests_pref,
+        });
+        console.log("data:", data.major)
+        console.log("user:", user.major)
       });
   };
 
   const getPublicProfile = () => {
+    console.log("Calling public profile...");
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/09155cb4-a9e8-4824-947a-41227da56d62",
       {
         method: "GET",
-        headers: {
-        },
+        headers: {},
       }
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-      }
-    );
+        console.log("public profile: ", data);
+      });
   };
 
   const getmatches = () => {
@@ -96,24 +122,38 @@ const EditProfile = () => {
       {
         method: "GET",
         headers: {
-          Authorization: localStorage.getItem("token")
+          Authorization: localStorage.getItem("token"),
         },
       }
     )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-      }
-    );
+      });
   };
+  const handleSchoolYearChange = (event) => {
+    setUser({ ...user, school_year: event.target.value });
+  };
+
+  const handleChange = (event) => {
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+  
+    setUser(prevUser => {
+      return {
+        ...prevUser,
+        [fieldName]: fieldValue
+      };
+    });
+  }
+  
 
   //initial call
   useEffect(() => {
     console.log("useEffect called");
-    // getUserId();
-    // console.log("userId: " + userId);
-    getUserId();
-  });
+    getPrivateProfile();
+  }, []);
+
   const submitProfile = () => {
     // TODO: save profile
     console.log("submitting profile");
@@ -226,7 +266,7 @@ const EditProfile = () => {
         <Row>
           <Space>
             <Avatar size={24} icon={<UserOutlined />} />
-            <h2>Name: {user.fname + " " + user.lname}</h2>
+              <h2>Name: {user.fname + " " + user.lname}</h2>
           </Space>
         </Row>
         <Row>
@@ -245,10 +285,11 @@ const EditProfile = () => {
             <Input defaultValue={user.major} />
           </Col>
           <Col span={8}>
-            <Input value={user.program} />
+            <Input defaultValue={user.program} />
           </Col>
           <Col span={8}>
-            <Input value={user.school_year} />
+            <input type="number" value={user.school_year} onChange={handleSchoolYearChange} />
+            {/* <Input defaultValue={user.school_year} /> */}
           </Col>
         </Row>
         <Row>
@@ -436,9 +477,10 @@ const EditProfile = () => {
         </Row>
       </Card>
       <Button
-      onClick={() => {
-        getPublicProfile();
-      }}>
+        onClick={() => {
+          getPublicProfile();
+        }}
+      >
         matches
       </Button>
     </Layout>

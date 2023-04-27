@@ -135,6 +135,7 @@ const EditProfile = () => {
     setUser({ ...user, school_year: event.target.value });
   };
 
+  // Handle changes for all fields
   const handleChange = (event) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
@@ -146,6 +147,18 @@ const EditProfile = () => {
       };
     });
   }
+  // handle changes for select
+  function handleChangeSelect(value, option) {
+    const fieldName = option.name;
+    setUser(prevUser => {
+      return {
+        ...prevUser,
+        [fieldName]: value
+      };
+    });
+  }
+  
+  
   
 
   //initial call
@@ -382,11 +395,17 @@ const EditProfile = () => {
               }}
               name = "date_pref"
               value={user.date_pref}
-              onChange={handleChange}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  date_pref: value
+                }));
+              }}
             />
           </Col>
           <Col span={8}>
-            <TimePicker format={"HH:mm"} />
+            {/* <TimePicker format={"HH:mm"} /> */}
+            <Input name="time_pref" value={user.time_pref} onChange={handleChange} ></Input>
           </Col>
           <Col span={8}>
             <Input name="location_pref" value={user.location_pref} onChange={handleChange} />
@@ -408,7 +427,12 @@ const EditProfile = () => {
             <Select
               style={{ width: 120 }}
               name = "major_pref"
-              onChange={handleChange}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  major_pref: value
+                }));
+              }}
               value={user.major_pref}
               options={[
                 { value: "same", label: "same" },
@@ -420,7 +444,12 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
-              onChange={handleChange}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  program_pref: value
+                }));
+              }}
               name = "program_pref"
               value = {user.program_pref}
               options={[
@@ -435,7 +464,12 @@ const EditProfile = () => {
               style={{ width: 120 }}
               name = "year_pref"
               value = {user.year_pref}
-              onChange={handleChange}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  year_pref: value
+                }));
+              }}
               options={[
                 { value: "same", label: "same" },
                 { value: "different", label: "different" },
@@ -457,9 +491,14 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
-              name = "class_pref"
-              value = {user.class_pref}
-              onChange={handleChange}
+              name = "classes_pref"
+              value = {user.classes_pref}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  classes_pref: value
+                }));
+              }}
               options={[
                 { value: "same", label: "same" },
                 { value: "different", label: "different" },
@@ -470,9 +509,14 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
-              name = "interest_pref"
-              value = {user.interest_pref}
-              onChange={handleChange}
+              name = "interests_pref"
+              value = {user.interests_pref}
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  interests_pref: value
+                }));
+              }}
               options={[
                 { value: "same", label: "same" },
                 { value: "different", label: "different" },

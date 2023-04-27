@@ -282,14 +282,13 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <Input defaultValue={user.major} />
+            <Input name="major" value={user.major} onChange={handleChange}/>
           </Col>
           <Col span={8}>
-            <Input defaultValue={user.program} />
+            <Input name = "program" value={user.program} onChange={handleChange}/>
           </Col>
           <Col span={8}>
-            <input type="number" value={user.school_year} onChange={handleSchoolYearChange} />
-            {/* <Input defaultValue={user.school_year} /> */}
+            <input type="number" name="school_year" value={user.school_year} onChange={handleChange} />
           </Col>
         </Row>
         <Row>
@@ -306,20 +305,16 @@ const EditProfile = () => {
             <Space.Compact>
               <Input
                 style={{
-                  width: "20%",
-                }}
-                defaultValue="+1"
-              />
-              <Input
-                style={{
                   width: "80%",
                 }}
-                defaultValue={user.phone}
+                name = "phone"
+                value={user.phone}
+                onChange={handleChange}
               />
             </Space.Compact>
           </Col>
           <Col span={8}>
-            <Input defaultValue={user.email} />
+            <Input name="email" value={user.email} onChange={handleChange}/>
           </Col>
           <Col span={8} />
         </Row>
@@ -332,7 +327,7 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <Input defaultValue={user.classes.join(", ")} />
+            <Input name="classes" value={user.classes.join(", ")} onChange={handleChange}/>
           </Col>
           <Col span={8} />
           <Col span={8} />
@@ -346,7 +341,7 @@ const EditProfile = () => {
         </Row>
         <Row>
           <Col span={8}>
-            <Input defaultValue={user.interests.join(", ")} />
+            <Input name="interests" value={user.interests.join(", ")} onChange={handleChange}/>
           </Col>
           <Col span={8} />
           <Col span={8} />
@@ -385,13 +380,16 @@ const EditProfile = () => {
               style={{
                 width: "100%",
               }}
+              name = "date_pref"
+              value={user.date_pref}
+              onChange={handleChange}
             />
           </Col>
           <Col span={8}>
             <TimePicker format={"HH:mm"} />
           </Col>
           <Col span={8}>
-            <Input placeholder="Please input a location..." />
+            <Input name="location_pref" value={user.location_pref} onChange={handleChange} />
           </Col>
         </Row>
         <Row>
@@ -409,6 +407,7 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
+              name = "major_pref"
               onChange={handleChange}
               value={user.major_pref}
               options={[
@@ -422,6 +421,8 @@ const EditProfile = () => {
             <Select
               style={{ width: 120 }}
               onChange={handleChange}
+              name = "program_pref"
+              value = {user.program_pref}
               options={[
                 { value: "same", label: "same" },
                 { value: "different", label: "different" },
@@ -432,6 +433,8 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
+              name = "year_pref"
+              value = {user.year_pref}
               onChange={handleChange}
               options={[
                 { value: "same", label: "same" },
@@ -454,6 +457,8 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
+              name = "class_pref"
+              value = {user.class_pref}
               onChange={handleChange}
               options={[
                 { value: "same", label: "same" },
@@ -465,6 +470,8 @@ const EditProfile = () => {
           <Col span={8}>
             <Select
               style={{ width: 120 }}
+              name = "interest_pref"
+              value = {user.interest_pref}
               onChange={handleChange}
               options={[
                 { value: "same", label: "same" },

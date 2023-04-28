@@ -192,7 +192,7 @@ const Home = () => {
           </Row>
           <Row>
             <Card style={{ width: "100%", margin: 20 }}
-            onClick={() => navigate("/publicprofile")}>
+            onClick={() => navigate("/publicprofile/"+match.matched_id)}>
               <Row>
                 <Col span={4}>
                   <Avatar size={64} icon={<UserOutlined />} />

@@ -12,9 +12,12 @@ import {
   import { Content, Footer, Header } from "antd/es/layout/layout";
   import { redirect, useNavigate } from "react-router-dom";
   import { useEffect, useState } from "react";
+  import { useParams } from 'react-router-dom';
   
   const PublicProfile = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
+    console.log("id: ", id);
     const [user, setUser] = useState({
       uuid: "",
       active_or_not: true,

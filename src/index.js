@@ -9,6 +9,7 @@ import Review from "./Review";
 import Login from "./Login";
 import Register from "./Register";
 import Confirm from "./Confirm";
+import PublicProfile from "./PublicProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 	{
 		path: "/profile",
 		element: <Profile />,
+	},
+	{
+		path: "/publicprofile",
+		element: <PublicProfile />,
 	},
 	{
 		path: "/history",

@@ -11,28 +11,82 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { redirect, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const user = {
-    fname: "John",
-    lname: "Doe",
-    major: "Computer Science",
-    program: "Bachelors",
-    school_year: 3,
-    phone: "555-555-5555",
-    email: "abc@gmail.com",
-    classes: ["CS 101", "CS 102", "CS 103"],
-    interests: ["Music", "Movies", "Sports"],
-    date_pref: ["Monday", "Tuesday", "Sunday"],
-    time_pref: ["Afternoon", "Evening"],
-    location_pref: ["Butler Library", "Butler Cafe"],
-    major_pref: "Same",
-    program_pref: "Same",
-    year_pref: "Same",
-    classes_pref: "Same",
-    interests_pref: "Same",
+  const [user, setUser] = useState({
+    uuid: "",
+    active_or_not: true,
+    fname: "",
+    lname: "",
+    major: "",
+    program: "",
+    school_year: 0,
+    phone: "",
+    email: "",
+    classes: [],
+    interests: [],
+    date_pref: [],
+    time_pref: [],
+    location_pref: [],
+    major_pref: "",
+    program_pref: "",
+    year_pref: "",
+    classes_pref: "",
+    interests_pref: "",
+  });
+  useEffect(() => {
+    console.log("user updated");
+    console.log(user);
+  }, [user]);
+
+  // Get User Information to load into the page
+  const getPrivateProfile = () => {
+    console.log("Calling private profile...");
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
+      {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("private profile: ", data);
+        setUser({
+          uuid: data.uuid,
+          active_or_not: data.active_or_not,
+          fname: data.fname,
+          lname: data.lname,
+          major: data.major,
+          program: data.program,
+          school_year: data.school_year,
+          phone: data.phone,
+          email: data.email,
+          classes: data.classes,
+          interests: data.interests,
+          date_pref: data.date_pref,
+          time_pref: data.time_pref,
+          location_pref: data.location_pref,
+          major_pref: data.major_pref,
+          program_pref: data.program_pref,
+          year_pref: data.year_pref,
+          classes_pref: data.classes_pref,
+          interests_pref: data.interests_pref,
+        });
+        console.log("data:", data.major)
+        console.log("user:", user.major)
+      });
   };
+  // call getPrivateProfile on page load
+  useEffect(() => {
+    console.log("useEffect called");
+    getPrivateProfile();
+  }, []);
+
   return (
     <Layout
       style={{
@@ -117,7 +171,7 @@ const Profile = () => {
             <p>{user.program}</p>
           </Col>
           <Col span={8}>
-            <p>{user.year}</p>
+            <p>{user.school_year}</p>
           </Col>
         </Row>
         <Row>

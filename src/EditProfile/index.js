@@ -17,7 +17,6 @@ import { redirect, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const EditProfile = () => {
-  const [userId, setUserId] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({
     uuid: "",
@@ -119,16 +118,7 @@ const EditProfile = () => {
       });
     }
   };
-  // handle changes for select
-  function handleChangeSelect(value, option) {
-    const fieldName = option.name;
-    setUser(prevUser => {
-      return {
-        ...prevUser,
-        [fieldName]: value
-      };
-    });
-  }
+
 
   // Save changes to backend
   const submitProfile = () => {

@@ -1,10 +1,11 @@
 import { Col, Row, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import ChatCard from "./ChatCard";
+import { useEffect, useState } from "react";
 
 const History = () => {
 	const navigate = useNavigate();
-	const matchHistory = [
+	const [matchHistory, setmatchHistory] = useState([
 		{
 			match_id: 1,
 			name: "Shawn Tai",
@@ -23,7 +24,31 @@ const History = () => {
 			time: new Date(),
 			location: "Myanmar",
 		},
-	];
+	]);
+	const getmatches = () => {
+		console.log("get matches");
+		fetch(
+		  "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/past",
+		  {
+			method: "GET",
+			headers: {
+			  Authorization: localStorage.getItem("token"),
+			},
+		  }
+		)
+		  .then((response) => response.json())
+		  .then((data) => {
+			console.log("matches: ", data);
+		  });
+	  };
+	  // call getMatches on page load
+	  useEffect(() => {
+		console.log("useEffect called");
+		//fetchMyId();
+		getmatches();
+	  }, []);
+
+
 	return (
 		<>
 			<Row style={{ background: "#7dbcea", padding: 20 }}>

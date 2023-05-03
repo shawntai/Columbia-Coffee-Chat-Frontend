@@ -45,20 +45,19 @@ import {
     }, [user]);
   
     // Get User Information to load into the page
-    const getPrivateProfile = () => {
-      console.log("Calling private profile...");
+    const getPublicProfile = () => {
+      console.log("Calling public profile...");
       fetch(
-        "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
+        "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/" + id,
         {
           method: "GET",
           headers: {
-            Authorization: localStorage.getItem("token"),
           },
         }
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("private profile: ", data);
+          console.log("public profile: ", data);
           setUser({
             uuid: data.uuid,
             active_or_not: data.active_or_not,
@@ -80,14 +79,12 @@ import {
             classes_pref: data.classes_pref,
             interests_pref: data.interests_pref,
           });
-          console.log("data:", data.major)
-          console.log("user:", user.major)
         });
     };
     // call getPrivateProfile on page load
     useEffect(() => {
       console.log("useEffect called");
-      getPrivateProfile();
+      getPublicProfile();
     }, []);
   
     return (
@@ -105,7 +102,7 @@ import {
                 fontSize: "18px",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/home")}
             >
               Back
             </Typography.Text>
@@ -119,28 +116,15 @@ import {
                 textAlign: "center",
               }}
             >
-              My Profile
+                Your Match
             </Typography.Text>
           </Col>
           <Col span={4}>
-            <Typography.Text
-              strong
-              style={{
-                color: "#fff",
-                fontSize: "18px",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/history")}
-            >
-              History
-            </Typography.Text>
           </Col>
         </Row>
   
         <Card
           title="Profile"
-          extra={<a href="/edit">Edit</a>}
-                headStyle={{ background: "#7dbcea" }}
           style={{
             alignContent: "center",
             margin: "auto",
@@ -226,7 +210,6 @@ import {
         </Card>
         <Card
           title="Preferences"
-          extra={<a href="/edit">Edit</a>}
           headStyle={{ background: "#7dbcea" }}
           style={{
             margin: "auto",
@@ -258,7 +241,7 @@ import {
               <p>{user.location_pref.join(", ")}</p>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col span={8}>
               <b>Major</b>
             </Col>
@@ -297,7 +280,7 @@ import {
               <p>{user.interests_pref}</p>
             </Col>
             <Col span={8} />
-          </Row>
+          </Row> */}
         </Card>
       </Layout>
     );

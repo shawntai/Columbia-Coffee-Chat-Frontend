@@ -164,6 +164,7 @@ const EditProfile = () => {
         // const userId = data["userId"];
         // setUserId(userId);
         // localStorage.setItem("userId", userId);
+        navigate("/profile");
       });
   };
   return (

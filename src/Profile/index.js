@@ -102,7 +102,7 @@ const Profile = () => {
               fontSize: "18px",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           >
             Back
           </Typography.Text>

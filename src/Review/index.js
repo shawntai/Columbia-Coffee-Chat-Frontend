@@ -15,9 +15,6 @@ const Review = () => {
 	// fetch the review from the API
 	const [match, setMatch] = useState(null);
 	useEffect(() => {
-		// fetch(`/api/review/${id}`)
-		// 	.then((res) => res.json())
-		// 	.then((data) => setMatch(data));
 		setMatch({
 			match_id: chat.match_id,
 			user_id: chat.dater_id,
@@ -31,6 +28,33 @@ const Review = () => {
 	if (!match) {
 		return <div>Loading...</div>;
 	}
+	// Save changes to backend
+	const submitReview = () => {
+		// TODO: save profile
+		console.log("submitting review");
+		console.log(match.match_id);
+		fetch(
+		  "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/submitReview",
+		  {
+			method: "PUT",
+			headers: {
+			  Authorization: localStorage.getItem("token"),
+			},
+			body: JSON.stringify({
+				match_id: match.match_id,
+				review: match.review,
+			}),
+		  }
+		)
+		  .then((response) => response.json())
+		  .then((data) => {
+			console.log({ data: data });
+			// const userId = data["userId"];
+			// setUserId(userId);
+			// localStorage.setItem("userId", userId);
+			//navigate("/history");
+		  });
+	  };
 	// otherwise, show the review
 	return (
 		<>
@@ -90,7 +114,7 @@ const Review = () => {
 							onClick={() => {
 								// update the review property in the match object with api
 								// then navigate to the history page
-								navigate("/history");
+								submitReview();
 							}}
 						>
 							Submit

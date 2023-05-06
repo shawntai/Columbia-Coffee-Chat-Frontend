@@ -40,6 +40,7 @@ const footerStyle = {
 
 const Home = () => {
   const navigate = useNavigate();
+  var hasmatch = false;
   const [match, setMatch] = useState({
     this_user_id: "",
     matched_id: "",
@@ -48,12 +49,12 @@ const Home = () => {
     location: "TBD",
   });
   useEffect(() => {
-    console.log("match updated");
+    //console.log("match updated");
     console.log(match);
   }, [match]);
 
   const getPublicProfile = () => {
-    console.log("Calling public profile...");
+    //console.log("Calling public profile...");
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/09155cb4-a9e8-4824-947a-41227da56d62",
       {
@@ -63,12 +64,22 @@ const Home = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("public profile: ", data);
+        //console.log("public profile: ", data);
       });
   };
 
   const fetchMatchedName = (userId) => {
-    console.log("Calling public profile...");
+    console.log("fetchMatchName()");
+    if (hasmatch === false) {
+      console.log("no match")
+      setMatch(prevMatch => {
+        return ({
+          ...prevMatch,
+          matched_name: "No match yet",
+          })
+      })
+      return;
+    }
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/"+userId,
       {
@@ -80,7 +91,7 @@ const Home = () => {
       .then((data) => {
         const fname = data.fname;
         const lname = data.lname;
-        console.log(fname + " " + lname);
+        //console.log(fname + " " + lname);
         setMatch(prevMatch => {
           return ({
             ...prevMatch,
@@ -92,7 +103,7 @@ const Home = () => {
   useEffect(() => { fetchMatchedName(match.matched_id) }, [match.matched_id]);
 
   const fetchMyId = () => {
-    console.log("Calling private profile...");
+    console.log("fetchMyId()");
     fetch(
       "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
       {
@@ -104,7 +115,7 @@ const Home = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("private profile: ", data);
+        //console.log("private profile: ", data);
         setMatch(prevMatch => {
           return ({
             ...prevMatch,
@@ -127,6 +138,10 @@ const Home = () => {
     )
       .then((response) => response.json())
       .then((data) => {
+        if (data["matches"].length == 0) {
+          console.log("no matches");
+          return;
+        }
         const thismatch = data["matches"][0];
         console.log(thismatch);
         if (thismatch.user_id1.S !== match.this_user_id) {

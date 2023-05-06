@@ -3,10 +3,13 @@ import { PlaceOutlined } from "@mui/icons-material";
 import { Button, Card, Col, Input, Row, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Review = () => {
 	// access the id parameter from the URL
 	const navigate = useNavigate();
+	const { state } = useLocation();
+	console.log("state: ", state);
 	const { id } = useParams();
 	// fetch the review from the API
 	const [match, setMatch] = useState(null);

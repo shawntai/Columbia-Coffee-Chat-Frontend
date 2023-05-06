@@ -16,14 +16,14 @@ const ChatCard = ({ chat }) => {
 					<CalendarOutlined />
 					{chat.time.toLocaleString()}
 				</Col>
-				<Col span={8}>
+				{/* <Col span={8}>
 					<PlaceOutlined />
 					{chat.location}
-				</Col>
+				</Col> */}
 				<Col span={8}>
 					<Button
 						type="primary"
-						onClick={() => navigate(`/review/${chat.match_id}`)}
+						onClick={() => navigate(`/review/${chat.match_id}`, { state: { chat } })}
 					>
 						Write a review
 					</Button>

@@ -69,7 +69,7 @@ const History = () => {
           var match_id = thismatch.match_id.S;
           var match_date = thismatch.match_date.S;
           var dater_id = "";
-          if (thismatch.user_id1.S == myID["my_id"]) {
+          if (thismatch.user_id1.S === myID["my_id"]) {
             dater_id = thismatch.user_id2.S;
           } else {
             dater_id = thismatch.user_id1.S;

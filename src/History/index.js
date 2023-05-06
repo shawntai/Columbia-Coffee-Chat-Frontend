@@ -69,6 +69,7 @@ const History = () => {
           var match_id = thismatch.match_id.S;
           var match_date = thismatch.match_date.S;
           var match_review = thismatch.review.S;
+          console.log("match id: ", match_id);
           var dater_id = "";
           if (thismatch.user_id1.S === myID["my_id"]) {
             dater_id = thismatch.user_id2.S;
@@ -76,13 +77,13 @@ const History = () => {
             dater_id = thismatch.user_id1.S;
           }
           const dater_name = await fetchMatchedName(dater_id);
-		  console.log("dater name: ", dater_name)
+		      console.log("dater name: ", dater_name)
 
           var thismatchInfo = {
             match_id: match_id,
             name: dater_name,
             time: match_date,
-            match_review: match_review,
+            review: match_review,
             location: "",
           };
           all_matches = all_matches.concat(thismatchInfo);

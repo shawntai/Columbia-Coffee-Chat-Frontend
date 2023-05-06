@@ -19,7 +19,7 @@ const Review = () => {
 			match_id: chat.match_id,
 			user_id: chat.dater_id,
 			user_name: chat.name,
-			review: "",
+			review: chat.review,
 			match_date: chat.time,
 			location: "",
 		});
@@ -33,6 +33,7 @@ const Review = () => {
 		// TODO: save profile
 		console.log("submitting review");
 		console.log(match.match_id);
+		console.log(match.review);
 		fetch(
 		  "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/submitReview",
 		  {
@@ -49,12 +50,14 @@ const Review = () => {
 		  .then((response) => response.json())
 		  .then((data) => {
 			console.log({ data: data });
-			// const userId = data["userId"];
-			// setUserId(userId);
-			// localStorage.setItem("userId", userId);
-			//navigate("/history");
+			navigate("/history");
 		  });
 	  };
+	// handle changes to the review
+	function handleReviewChange(event) {
+		const newMatch = { ...match, review: event.target.value };
+		setMatch(newMatch);
+	}
 	// otherwise, show the review
 	return (
 		<>
@@ -106,6 +109,8 @@ const Review = () => {
 						<Input.TextArea
 							rows={4}
 							placeholder="Write your review here"
+							value={match.review}
+        					onChange={handleReviewChange}
 						/>
 					</Row>
 					<Row>

@@ -9,6 +9,7 @@ const Review = () => {
 	// access the id parameter from the URL
 	const navigate = useNavigate();
 	const { state } = useLocation();
+	const chat = state.chat;
 	console.log("state: ", state);
 	const { id } = useParams();
 	// fetch the review from the API
@@ -18,12 +19,12 @@ const Review = () => {
 		// 	.then((res) => res.json())
 		// 	.then((data) => setMatch(data));
 		setMatch({
-			match_id: id,
-			user_id: 1,
-			user_name: "Shawn Tai",
+			match_id: chat.match_id,
+			user_id: chat.dater_id,
+			user_name: chat.name,
 			review: "",
-			match_date: new Date(),
-			location: "Butler Library",
+			match_date: chat.time,
+			location: "",
 		});
 	}, [id]);
 	// if the review is not loaded yet, show a loading message

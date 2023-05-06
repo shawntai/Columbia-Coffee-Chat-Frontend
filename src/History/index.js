@@ -59,7 +59,7 @@ const History = () => {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        //console.log("matches: ", data);
+        console.log("matches: ", data);
         var matches_array = data.matches;
         //console.log("length of matches: ", matches_array.length);
         let all_matches = [];
@@ -68,6 +68,7 @@ const History = () => {
           //console.log("this match: ", thismatch);
           var match_id = thismatch.match_id.S;
           var match_date = thismatch.match_date.S;
+          var match_review = thismatch.review.S;
           var dater_id = "";
           if (thismatch.user_id1.S === myID["my_id"]) {
             dater_id = thismatch.user_id2.S;
@@ -81,6 +82,7 @@ const History = () => {
             match_id: match_id,
             name: dater_name,
             time: match_date,
+            match_review: match_review,
             location: "",
           };
           all_matches = all_matches.concat(thismatchInfo);

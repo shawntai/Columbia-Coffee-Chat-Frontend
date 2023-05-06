@@ -6,26 +6,7 @@ import { useEffect, useState } from "react";
 const History = () => {
 	const navigate = useNavigate();
 	const [myID, setMyID ] = useState({my_id: ""});
-	const [matchHistory, setmatchHistory] = useState([
-		{
-			match_id: 1,
-			name: "Shawn Tai",
-			time: new Date(),
-			location: "Butler Library",
-		},
-		{
-			match_id: 2,
-			name: "Luke Hsu",
-			time: new Date(),
-			location: "Ferris Booth Commons",
-		},
-		{
-			match_id: 3,
-			name: "Curt Cobain",
-			time: new Date(),
-			location: "Myanmar",
-		},
-	]);
+	const [matchHistory, setmatchHistory] = useState([]);
 	const fetchMyId = () => {
 		console.log("Calling private profile...");
 		fetch(
@@ -63,12 +44,13 @@ const History = () => {
 		)
 		  .then((response) => response.json())
 		  .then((data) => {
-			console.log("matches: ", data);
+			//console.log("matches: ", data);
 			var matches_array = data.matches;
-			console.log("length of matches: ", matches_array.length);
+			//console.log("length of matches: ", matches_array.length);
+			let all_matches = []
 			for (var i = 0; i < matches_array.length; i++) {
 				var thismatch = matches_array[i];
-				console.log("this match: ", thismatch);
+				//console.log("this match: ", thismatch);
 				var match_id = thismatch.match_id.S;
 				var match_date = thismatch.match_date.S;
 				var thismatchInfo = {
@@ -77,8 +59,10 @@ const History = () => {
 					time: match_date,
 					location: "Myanmar",
 				};
-				setmatchHistory([...matchHistory, thismatchInfo]);
+				all_matches = all_matches.concat(thismatchInfo);
 			};
+			console.log("all matches: ", all_matches);
+			setmatchHistory(all_matches);
 		  });
 	  };
 	  // call getMatches on page load

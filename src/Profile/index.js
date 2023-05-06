@@ -56,29 +56,49 @@ const Profile = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("private profile: ", data);
+        // setUser({
+        //   uuid: data.uuid,
+        //   active_or_not: data.active_or_not,
+        //   fname: data.fname,
+        //   lname: data.lname,
+        //   major: data.major,
+        //   program: data.program,
+        //   school_year: data.school_year,
+        //   phone: data.phone,
+        //   email: data.email,
+        //   classes: data.classes,
+        //   interests: data.interests,
+        //   date_pref: data.date_pref,
+        //   time_pref: data.time_pref,
+        //   location_pref: data.location_pref,
+        //   major_pref: data.major_pref,
+        //   program_pref: data.program_pref,
+        //   year_pref: data.year_pref,
+        //   classes_pref: data.classes_pref,
+        //   interests_pref: data.interests_pref,
+        // });
         setUser({
+          ...user,
           uuid: data.uuid,
           active_or_not: data.active_or_not,
-          fname: data.fname,
-          lname: data.lname,
-          major: data.major,
-          program: data.program,
-          school_year: data.school_year,
-          phone: data.phone,
-          email: data.email,
-          classes: data.classes,
-          interests: data.interests,
-          date_pref: data.date_pref,
-          time_pref: data.time_pref,
-          location_pref: data.location_pref,
-          major_pref: data.major_pref,
-          program_pref: data.program_pref,
-          year_pref: data.year_pref,
-          classes_pref: data.classes_pref,
-          interests_pref: data.interests_pref,
+          fname: data.fname || user.fname,
+          lname: data.lname || user.lname,
+          major: data.major || user.major,
+          program: data.program || user.program,
+          school_year: data.school_year || user.school_year,
+          phone: data.phone || user.phone,
+          email: data.email || user.email,
+          classes: data.classes || user.classes,
+          interests: data.interests || user.interests,
+          date_pref: data.date_pref || user.date_pref,
+          time_pref: data.time_pref || user.time_pref,
+          location_pref: data.location_pref || user.location_pref,
+          major_pref: data.major_pref || user.major_pref,
+          program_pref: data.program_pref || user.program_pref,
+          year_pref: data.year_pref || user.year_pref,
+          classes_pref: data.classes_pref || user.classes_pref,
+          interests_pref: data.interests_pref || user.interests_pref,
         });
-        console.log("data:", data.major)
-        console.log("user:", user.major)
       });
   };
   // call getPrivateProfile on page load

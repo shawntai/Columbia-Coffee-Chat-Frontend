@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 const History = () => {
 	const navigate = useNavigate();
+	const [myID, setMyID ] = useState({my_id: ""});
 	const [matchHistory, setmatchHistory] = useState([
 		{
 			match_id: 1,
@@ -25,6 +26,30 @@ const History = () => {
 			location: "Myanmar",
 		},
 	]);
+	const fetchMyId = () => {
+		console.log("Calling private profile...");
+		fetch(
+		  "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
+		  {
+			method: "GET",
+			headers: {
+			  Authorization: localStorage.getItem("token"),
+			},
+		  }
+		)
+		  .then((response) => response.json())
+		  .then((data) => {
+			console.log("private profile: ", data);
+			setMyID(prevID => {
+			  return ({
+				my_id: data.uuid,
+				})
+			})
+		  });
+	  };
+
+
+
 	const getmatches = () => {
 		console.log("get matches");
 		fetch(
@@ -39,12 +64,28 @@ const History = () => {
 		  .then((response) => response.json())
 		  .then((data) => {
 			console.log("matches: ", data);
+			var matches_array = data.matches;
+			console.log("length of matches: ", matches_array.length);
+			for (var i = 0; i < matches_array.length; i++) {
+				var thismatch = matches_array[i];
+				console.log("this match: ", thismatch);
+				var match_id = thismatch.match_id.S;
+				var match_date = thismatch.match_date.S;
+				var thismatchInfo = {
+					match_id: match_id,
+					name: "Lukey Shawn",
+					time: match_date,
+					location: "Myanmar",
+				};
+				setmatchHistory([...matchHistory, thismatchInfo]);
+			};
 		  });
 	  };
 	  // call getMatches on page load
 	  useEffect(() => {
 		console.log("useEffect called");
-		//fetchMyId();
+		fetchMyId();
+		console.log("fetched my ID:", myID["my_id"])
 		getmatches();
 	  }, []);
 

@@ -17,9 +17,6 @@ import { useNavigate } from "react-router-dom";
 const headerStyle = {
   textAlign: "center",
   color: "#fff",
-  // height: 64,
-  // paddingInline: 50,
-  // lineHeight: "64px",
   backgroundColor: "#012269",
   margin: 0,
 };
@@ -40,7 +37,6 @@ const footerStyle = {
 
 const Home = () => {
   const navigate = useNavigate();
-  var hasmatch = false;
   const [match, setMatch] = useState({
     this_user_id: "",
     matched_id: "",
@@ -70,7 +66,8 @@ const Home = () => {
 
   const fetchMatchedName = (userId) => {
     console.log("fetchMatchName()");
-    if (hasmatch === false) {
+    console.log("userId: ",userId);
+    if (!userId || userId.length === 0) {
       console.log("no match")
       setMatch(prevMatch => {
         return ({

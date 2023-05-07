@@ -49,20 +49,85 @@ const Home = () => {
     console.log(match);
   }, [match]);
 
-  const getPublicProfile = () => {
-    //console.log("Calling public profile...");
+  
+
+  const fetchMyId = () => {
+    console.log("fetchMyId()");
     fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/09155cb4-a9e8-4824-947a-41227da56d62",
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
       {
         method: "GET",
-        headers: {},
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       }
     )
       .then((response) => response.json())
       .then((data) => {
-        //console.log("public profile: ", data);
+        //console.log("private profile: ", data);
+        setMatch(prevMatch => {
+          return ({
+            ...prevMatch,
+            this_user_id: data.uuid,
+            })
+        })
       });
   };
+  // call getMatches on page load
+  useEffect(() => {
+    console.log("UseEffect for fetchMyId() triggered");
+    fetchMyId();
+  }, []);
+
+  const getmatches = (myID) => {
+    console.log("get matches");
+    if (!myID || myID.length === 0) {
+      console.log("no my Id yet");
+      return;
+    }
+    console.log("my Id: ", myID);
+    fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/past",
+      {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data["matches"].length == 0) {
+          console.log("no matches");
+          return;
+        }
+        const thismatch = data["matches"][0];
+        console.log(thismatch);
+        if (thismatch.user_id1.S !== myID) {
+          setMatch(prevMatch => {
+            return ({
+              ...prevMatch,
+              matched_id: thismatch.user_id1.S,
+              match_date: new Date(thismatch.match_date.S),
+              })
+          })
+        }
+        else {
+          setMatch(prevMatch => {
+            return ({
+              ...prevMatch,
+              matched_id: thismatch.user_id2.S,
+              match_date: new Date(thismatch.match_date.S),
+              })
+          })
+        }
+      });
+  };
+  useEffect(() => { 
+    console.log("UseEffect for getMatches() triggered");
+    getmatches(match.this_user_id) 
+  
+  }, [match.this_user_id]  );
 
   const fetchMatchedName = (userId) => {
     console.log("fetchMatchName()");
@@ -97,72 +162,11 @@ const Home = () => {
         })
       });
   };
-  useEffect(() => { fetchMatchedName(match.matched_id) }, [match.matched_id]);
-
-  const fetchMyId = () => {
-    console.log("fetchMyId()");
-    fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/private/123",
-      {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        //console.log("private profile: ", data);
-        setMatch(prevMatch => {
-          return ({
-            ...prevMatch,
-            this_user_id: data.uuid,
-            })
-        })
-      });
-  };
-
-  const getmatches = () => {
-    console.log("get matches");
-    fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/match/past",
-      {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data["matches"].length == 0) {
-          console.log("no matches");
-          return;
-        }
-        const thismatch = data["matches"][0];
-        console.log(thismatch);
-        if (thismatch.user_id1.S !== match.this_user_id) {
-          setMatch(prevMatch => {
-            return ({
-              ...prevMatch,
-              matched_id: thismatch.user_id1.S,
-              })
-          })
-        }
-        setMatch(prevMatch => {
-          return ({ 
-            ...prevMatch,
-          match_date: new Date(thismatch.match_date.S),
-          })
-        })
-      });
-  };
-  // call getMatches on page load
-  useEffect(() => {
-    console.log("useEffect called");
-    fetchMyId();
-    getmatches();
-  }, []);
+  useEffect(() => { 
+    console.log("UseEffect for fetchMatchedName() triggered");
+    fetchMatchedName(match.matched_id) 
+  }, [match.matched_id]);
+  
 
   return (
     <div className="App">

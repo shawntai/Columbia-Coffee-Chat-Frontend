@@ -75,7 +75,7 @@ const Home = () => {
       setMatch(prevMatch => {
         return ({
           ...prevMatch,
-          matched_name: "No match yet",
+          matched_name: "No match",
           })
       })
       return;

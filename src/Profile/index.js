@@ -201,7 +201,9 @@ const Profile = () => {
           <Col span={8}>
             <b>Email</b>
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+            <b>Active</b>
+          </Col>
         </Row>
         <Row>
           <Col span={8}>
@@ -210,7 +212,9 @@ const Profile = () => {
           <Col span={8}>
             <p>{user.email}</p>
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+            <p>{user.active_or_not ? "Yes" : "No"}</p>
+          </Col>
         </Row>
         <Row>
           <Col span={8}>

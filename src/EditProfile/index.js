@@ -262,7 +262,9 @@ const EditProfile = () => {
           <Col span={8}>
             <b>Email</b>
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+            <b>Active</b>
+          </Col>
         </Row>
         <Row>
           <Col span={8}>
@@ -280,7 +282,23 @@ const EditProfile = () => {
           <Col span={8}>
             <Input name="email" value={user.email} onChange={handleChange}/>
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+          <Select
+              style={{ width: 120 }}
+              name = "active_or_not"
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  active_or_not: value,
+                }));
+              }}
+              value={user.active_or_not}
+              options={[
+                { value: true, label: "true" },
+                { value: false, label: "false" },
+              ]}
+            />
+          </Col>
         </Row>
         <Row>
           <Col span={8}>

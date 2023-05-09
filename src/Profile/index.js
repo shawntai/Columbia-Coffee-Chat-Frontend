@@ -257,7 +257,7 @@ const Profile = () => {
           boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         }}
       >
-        <Row>
+        {/* <Row>
           <Col span={8}>
             <b>Date</b>
           </Col>
@@ -318,6 +318,24 @@ const Profile = () => {
             <p>{user.interests_pref}</p>
           </Col>
           <Col span={8} />
+        </Row> */}
+        <Row>
+          <Col span={8}>
+            <b>Match Preference</b>
+          </Col>
+          <Col span={8}>
+          </Col>
+          <Col span={8}>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <p>{user.major_pref}</p>
+          </Col>
+          <Col span={8}>
+          </Col>
+          <Col span={8}>
+          </Col>
         </Row>
       </Card>
     </Layout>

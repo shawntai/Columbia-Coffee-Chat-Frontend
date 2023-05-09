@@ -111,9 +111,11 @@ const Profile = () => {
 
   return (
     <Layout
-      style={{
-        // background: "#012269"
-      }}
+      style={
+        {
+          // background: "#012269"
+        }
+      }
     >
       <Row style={{ background: "#7dbcea", padding: 20 }}>
         <Col span={4}>
@@ -155,11 +157,11 @@ const Profile = () => {
           </Typography.Text>
         </Col>
       </Row>
-      <img src={user.avatar_pic_base64} alt="Uploaded Image" />
+
       <Card
         title="Profile"
         extra={<a href="/edit">Edit</a>}
-			  headStyle={{ background: "#7dbcea" }}
+        headStyle={{ background: "#7dbcea" }}
         style={{
           alignContent: "center",
           margin: "auto",
@@ -174,6 +176,15 @@ const Profile = () => {
             <h2>Name: {user.fname + " " + user.lname}</h2>
           </Space>
         </Row>
+
+        <Row>
+          <Col span={4}></Col>
+          <Col span={16} style={{ textAlign: "center" }}>
+            <img src={user.avatar_pic_base64} alt="no profile Image" />
+          </Col>
+          <Col span={4}></Col>
+        </Row>
+
         <Row>
           <Col span={8}>
             <b>Major</b>
@@ -325,19 +336,15 @@ const Profile = () => {
           <Col span={8}>
             <b>Match Preference</b>
           </Col>
-          <Col span={8}>
-          </Col>
-          <Col span={8}>
-          </Col>
+          <Col span={8}></Col>
+          <Col span={8}></Col>
         </Row>
         <Row>
           <Col span={8}>
             <p>{user.major_pref}</p>
           </Col>
-          <Col span={8}>
-          </Col>
-          <Col span={8}>
-          </Col>
+          <Col span={8}></Col>
+          <Col span={8}></Col>
         </Row>
       </Card>
     </Layout>

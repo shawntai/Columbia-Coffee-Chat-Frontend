@@ -208,7 +208,7 @@ import {
             <Col span={8} />
           </Row>
         </Card>
-        <Card
+        {/* <Card
           title="Preferences"
           headStyle={{ background: "#7dbcea" }}
           style={{
@@ -241,7 +241,7 @@ import {
               <p>{user.location_pref.join(", ")}</p>
             </Col>
           </Row>
-          {/* <Row>
+          <Row>
             <Col span={8}>
               <b>Major</b>
             </Col>
@@ -280,8 +280,8 @@ import {
               <p>{user.interests_pref}</p>
             </Col>
             <Col span={8} />
-          </Row> */}
-        </Card>
+          </Row>
+        </Card> */}
       </Layout>
     );
   };

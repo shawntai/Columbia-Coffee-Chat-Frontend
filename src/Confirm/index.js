@@ -11,9 +11,13 @@ import {
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Content, Footer, Header } from "antd/es/layout/layout";
+import { useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 
 const Confirm = () => {
+  const [state, setState] = useState({
+    error: ""
+  });
   const navigate = useNavigate();
 
   const onFinish = (values) => {
@@ -35,6 +39,7 @@ const Confirm = () => {
         if (response.status === 200) {
           navigate("/login");
         } else {
+          setState({error: 'something went wrong :('});
           console.log("error");
         }
         return response.json();
@@ -103,7 +108,7 @@ const Confirm = () => {
             autoComplete="off"
           >
             <Form.Item
-              label="Username"
+              label="UNI"
               name="username"
               rules={[
                 {
@@ -137,6 +142,9 @@ const Confirm = () => {
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
+              <div style={{color: "red"}}>
+                {state.error}
+              </div>
             </Form.Item>
           </Form>
         </Card>

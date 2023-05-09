@@ -13,7 +13,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  //const [userInfo, setUserInfo] = useState({});
+  const [state, setState] = useState({
+    error: ""
+  });
+
+  const [userInfo, setUserInfo] = useState({});
 
   const navigate = useNavigate();
 
@@ -32,11 +36,21 @@ const Login = () => {
         }),
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 200) {
+          setState({error: ""});;
+        }
+        else {
+          setState({error: 'something went wrong :('});
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("response:", data);
-        localStorage.setItem("token", data.authToken);
-        navigate("/home");
+        if (!("message" in data)) {
+          localStorage.setItem("token", data.authToken);
+          navigate("/home");
+        }
       });
   };
 
@@ -116,7 +130,7 @@ const Login = () => {
             autoComplete="off"
           >
             <Form.Item
-              label="Username"
+              label="UNI"
               name="username"
               rules={[
                 {
@@ -150,6 +164,9 @@ const Login = () => {
               <Button type="primary" htmlType="submit">
                 Login
               </Button>
+              <div style={{color: "red"}}>
+                {state.error}
+              </div>
             </Form.Item>
           </Form>
           <Button onClick={() => navigate("/register")}>Register</Button>

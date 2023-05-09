@@ -104,7 +104,7 @@ const Home = () => {
           return;
         }
         const thismatch = data["matches"][0];
-        console.log(thismatch);
+        console.log("thisistheone", thismatch);
         if (thismatch.user_id1.S !== myID) {
           setMatch(prevMatch => {
             return ({
@@ -134,7 +134,8 @@ const Home = () => {
   const fetchMatchedName = (userId, myStatus) => {
     console.log("fetchMatchName()");
     console.log("userId: ",userId);
-    if (!userId || userId.length === 0 || !myStatus) {
+    // if (!userId || userId.length === 0 || !myStatus) {
+    if (!userId || userId.length === 0) {
       console.log("no match")
       setMatch(prevMatch => {
         return ({
@@ -236,12 +237,12 @@ const Home = () => {
                     </Space>
                   </Row>
                   <Row>
-                    <Space>
+                    {/* <Space>
                       <PlaceOutlined style={{ fontSize: 35 }} />
                       <Typography.Text style={{ fontSize: "20px" }}>
                         {match.location}
                       </Typography.Text>
-                    </Space>
+                    </Space> */}
                   </Row>
                 </Col>
               </Row>

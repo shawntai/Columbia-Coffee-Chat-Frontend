@@ -17,7 +17,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     uuid: "",
-    active_or_not: true,
+    active_or_not: false,
     fname: "",
     lname: "",
     major: "",

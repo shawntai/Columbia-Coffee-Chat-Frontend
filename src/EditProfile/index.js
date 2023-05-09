@@ -26,7 +26,7 @@ const EditProfile = () => {
     lname: "",
     major: "",
     program: "",
-    school_year: 0,
+    school_year: "0",
     phone: "",
     email: "",
     classes: [],

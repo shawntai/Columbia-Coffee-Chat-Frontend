@@ -28,23 +28,10 @@ const History = () => {
         });
       });
   };
-
-  const fetchMatchedName = async (userId) => {
-    console.log("Calling public profile...");
-    const response = await fetch(
-      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/" +
-        userId,
-      {
-        method: "GET",
-        headers: {},
-      }
-    );
-    const data = await response.json();
-    const fname = data.fname;
-    const lname = data.lname;
-    const matched_name = fname + " " + lname;
-    return matched_name;
-  };
+  useEffect(() => {
+    console.log("UseEffect for fetchMyId() triggered");
+    fetchMyId();
+  }, []);
 
   const getmatches = () => {
     console.log("get matches");
@@ -92,13 +79,29 @@ const History = () => {
         setmatchHistory(all_matches);
       });
   };
-  // call getMatches on page load
-  useEffect(() => {
-    console.log("useEffect called");
-    fetchMyId();
-    console.log("fetched my ID:", myID["my_id"]);
-    getmatches();
-  }, []);
+  useEffect(() => { 
+    console.log("UseEffect for getMatches() triggered");
+    getmatches() ;
+  
+  }, [myID]);
+
+  const fetchMatchedName = async (userId) => {
+    console.log("Calling public profile...");
+    const response = await fetch(
+      "https://u21pmc5zag.execute-api.us-east-1.amazonaws.com/beta/profile/public/" +
+        userId,
+      {
+        method: "GET",
+        headers: {},
+      }
+    );
+    const data = await response.json();
+    const fname = data.fname;
+    const lname = data.lname;
+    const matched_name = fname + " " + lname;
+    return matched_name;
+  };
+
 
   useEffect(() => {
 	console.log("match history changed: ", matchHistory);

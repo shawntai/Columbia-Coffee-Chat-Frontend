@@ -56,6 +56,10 @@ const EditProfile = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setBase64String(reader.result);
+      setUser({
+        ...user,
+        avatar_pic_base64: reader.result,
+      })
     };
   };
   // Get User Information to load into the page
@@ -163,7 +167,7 @@ const EditProfile = () => {
               year_pref: user.year_pref,
               classes_pref: user.classes_pref,
               interests_pref: user.interests_pref,
-              avatar_pic_base64: base64String,
+              avatar_pic_base64: user.avatar_pic_base64,
             },
           },
         }),
@@ -346,7 +350,7 @@ const EditProfile = () => {
         </Row>
         <Row>
           <input type="file" onChange={handleImageUpload} />
-          {base64String && <img src={base64String} alt="No profile Image" />}
+          {user.avatar_pic_base64 && <img src={user.avatar_pic_base64} alt="No profile Image" />}
         </Row>
       </Card>
       <Card

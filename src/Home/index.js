@@ -110,7 +110,7 @@ const Home = () => {
             return ({
               ...prevMatch,
               matched_id: thismatch.user_id1.S,
-              match_date: new Date(thismatch.match_date.S),
+              match_date: thismatch.match_date.S,
               })
           })
         }
@@ -119,7 +119,7 @@ const Home = () => {
             return ({
               ...prevMatch,
               matched_id: thismatch.user_id2.S,
-              match_date: new Date(thismatch.match_date.S),
+              match_date: thismatch.match_date.S,
               })
           })
         }
@@ -235,7 +235,7 @@ const Home = () => {
                     <Space>
                       <CalendarOutlined style={{ fontSize: 35 }} />
                       <Typography.Text style={{ fontSize: "20px" }}>
-                        {match.match_date.toLocaleString()}
+                        {match.match_date}
                       </Typography.Text>
                     </Space>
                   </Row>

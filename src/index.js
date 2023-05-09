@@ -10,6 +10,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Confirm from "./Confirm";
 import PublicProfile from "./PublicProfile";
+import UploadImage from "./UploadImage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
 	{
 		path: "/review/:id",
 		element: <Review />,
+	},
+	{
+		path: "/uploadimage",
+		element: <UploadImage />,
 	},
 ]);
 

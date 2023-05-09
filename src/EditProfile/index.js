@@ -341,7 +341,7 @@ const EditProfile = () => {
           boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         }}
       >
-        <Row>
+        {/* <Row>
           <Col span={8}>
             <b>Date</b>
           </Col>
@@ -373,14 +373,13 @@ const EditProfile = () => {
             />
           </Col>
           <Col span={8}>
-            {/* <TimePicker format={"HH:mm"} /> */}
             <Input name="time_pref" value={user.time_pref} onChange={handleChange} ></Input>
           </Col>
           <Col span={8}>
             <Input name="location_pref" value={user.location_pref} onChange={handleChange} />
           </Col>
-        </Row>
-        <Row>
+        </Row> */}
+        {/* <Row>
           <Col span={8}>
             <b>Major</b>
           </Col>
@@ -494,6 +493,34 @@ const EditProfile = () => {
             />
           </Col>
           <Col span={8} />
+        </Row> */}
+        <Row>
+          <Col span={8}>
+            <b>Match Preference</b>
+          </Col>
+          <Col span={8}>
+          </Col>
+          <Col span={8}>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8}>
+            <Select
+              style={{ width: 120 }}
+              name = "major_pref"
+              onChange={(value) => {
+                setUser((prevState) => ({
+                  ...prevState,
+                  major_pref: value
+                }));
+              }}
+              value={user.major_pref}
+              options={[
+                { value: "same", label: "same" },
+                { value: "different", label: "different" },
+              ]}
+            />
+          </Col>
         </Row>
       </Card>
     </Layout>

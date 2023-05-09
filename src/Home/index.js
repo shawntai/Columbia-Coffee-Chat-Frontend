@@ -42,6 +42,7 @@ const Home = () => {
     this_user_active: true,
     matched_id: "",
     matched_name: "",
+    matched_avatar_pic_base64: "",
     match_date: "",
     location: "TBD",
   });
@@ -75,7 +76,6 @@ const Home = () => {
         })
       });
   };
-  // call getMatches on page load
   useEffect(() => {
     console.log("UseEffect for fetchMyId() triggered");
     fetchMyId();
@@ -141,6 +141,7 @@ const Home = () => {
         return ({
           ...prevMatch,
           matched_name: "No match",
+          matched_avatar_pic_base64: "",
           })
       })
       return;
@@ -161,6 +162,8 @@ const Home = () => {
           return ({
             ...prevMatch,
             matched_name: fname + " " + lname,
+            matched_avatar_pic_base64: data.avatar_pic_base64,
+            
             })
         })
       });
@@ -220,7 +223,7 @@ const Home = () => {
             }>
               <Row>
                 <Col span={4}>
-                  <Avatar size={64} icon={<UserOutlined />} />
+                  <Avatar size={64} src={match.matched_avatar_pic_base64} />
                 </Col>
                 <Col span={10}>
                   <Typography.Text style={{ fontSize: "30px" }}>

@@ -38,6 +38,7 @@ import {
       year_pref: "",
       classes_pref: "",
       interests_pref: "",
+      avatar_pic_base64: "",
     });
     useEffect(() => {
       console.log("user updated");
@@ -78,6 +79,7 @@ import {
             year_pref: data.year_pref,
             classes_pref: data.classes_pref,
             interests_pref: data.interests_pref,
+            avatar_pic_base64: data.avatar_pic_base64,
           });
         });
     };
@@ -122,7 +124,7 @@ import {
           <Col span={4}>
           </Col>
         </Row>
-  
+        <img src={user.avatar_pic_base64} alt="No profile Image" />
         <Card
           title="Profile"
           style={{

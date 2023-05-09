@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const [base64String, setBase64String] = useState("");
   const [user, setUser] = useState({
     uuid: "",
     active_or_not: false,
@@ -38,6 +39,7 @@ const EditProfile = () => {
     year_pref: "",
     classes_pref: "",
     interests_pref: "",
+    avatar_pic_base64: "",
   });
   const dateOptions = [
     { label: "Monday", value: "Monday" },
@@ -48,7 +50,14 @@ const EditProfile = () => {
     { label: "Saturday", value: "Saturday" },
     { label: "Sunday", value: "Sunday" },
   ];
-
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setBase64String(reader.result);
+    };
+  };
   // Get User Information to load into the page
   const getPrivateProfile = () => {
     console.log("Calling private profile...");
@@ -63,7 +72,8 @@ const EditProfile = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("private profile: ", data);
+        console.log("private profile data: ", data);
+        console.log(data.uuid);
         setUser({
           ...user,
           uuid: data.uuid,
@@ -85,6 +95,7 @@ const EditProfile = () => {
           year_pref: data.year_pref || user.year_pref,
           classes_pref: data.classes_pref || user.classes_pref,
           interests_pref: data.interests_pref || user.interests_pref,
+          avatar_pic_base64: data.avatar_pic_base64 || user.avatar_pic_base64,
         });
       });
   };
@@ -152,6 +163,7 @@ const EditProfile = () => {
               year_pref: user.year_pref,
               classes_pref: user.classes_pref,
               interests_pref: user.interests_pref,
+              avatar_pic_base64: base64String,
             },
           },
         }),
@@ -163,6 +175,7 @@ const EditProfile = () => {
         // const userId = data["userId"];
         // setUserId(userId);
         // localStorage.setItem("userId", userId);
+        console.log("response: ", data);
         navigate("/profile");
       });
   };
@@ -327,6 +340,10 @@ const EditProfile = () => {
           </Col>
           <Col span={8} />
           <Col span={8} />
+        </Row>
+        <Row>
+          <input type="file" onChange={handleImageUpload} />
+          {base64String && <img src={base64String} alt="No profile Image" />}
         </Row>
       </Card>
       <Card

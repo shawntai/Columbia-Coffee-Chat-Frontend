@@ -35,6 +35,7 @@ const Profile = () => {
     year_pref: "",
     classes_pref: "",
     interests_pref: "",
+    avatar_pic_base64: "",
   });
   useEffect(() => {
     console.log("user updated");
@@ -98,6 +99,7 @@ const Profile = () => {
           year_pref: data.year_pref || user.year_pref,
           classes_pref: data.classes_pref || user.classes_pref,
           interests_pref: data.interests_pref || user.interests_pref,
+          avatar_pic_base64: data.avatar_pic_base64 || user.avatar_pic_base64,
         });
       });
   };
@@ -153,7 +155,7 @@ const Profile = () => {
           </Typography.Text>
         </Col>
       </Row>
-
+      <img src={user.avatar_pic_base64} alt="Uploaded Image" />
       <Card
         title="Profile"
         extra={<a href="/edit">Edit</a>}

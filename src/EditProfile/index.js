@@ -342,6 +342,9 @@ const EditProfile = () => {
           <Col span={8} />
         </Row>
         <Row>
+          <b> Upload Profile Picture</b>
+        </Row>
+        <Row>
           <input type="file" onChange={handleImageUpload} />
           {base64String && <img src={base64String} alt="No profile Image" />}
         </Row>

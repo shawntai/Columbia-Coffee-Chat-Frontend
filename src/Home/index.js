@@ -39,6 +39,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [match, setMatch] = useState({
     this_user_id: "",
+    this_user_active: true,
     matched_id: "",
     matched_name: "",
     match_date: "",
@@ -69,6 +70,7 @@ const Home = () => {
           return ({
             ...prevMatch,
             this_user_id: data.uuid,
+            this_user_active: data.active_or_not
             })
         })
       });
@@ -125,14 +127,14 @@ const Home = () => {
   };
   useEffect(() => { 
     console.log("UseEffect for getMatches() triggered");
-    getmatches(match.this_user_id) 
+    getmatches(match.this_user_id) ;
   
   }, [match.this_user_id]  );
 
-  const fetchMatchedName = (userId) => {
+  const fetchMatchedName = (userId, myStatus) => {
     console.log("fetchMatchName()");
     console.log("userId: ",userId);
-    if (!userId || userId.length === 0) {
+    if (!userId || userId.length === 0 || !myStatus) {
       console.log("no match")
       setMatch(prevMatch => {
         return ({
@@ -164,7 +166,7 @@ const Home = () => {
   };
   useEffect(() => { 
     console.log("UseEffect for fetchMatchedName() triggered");
-    fetchMatchedName(match.matched_id) 
+    fetchMatchedName(match.matched_id, match.this_user_active) 
   }, [match.matched_id]);
   
 
